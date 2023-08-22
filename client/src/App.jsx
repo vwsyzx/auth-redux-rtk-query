@@ -12,11 +12,13 @@ function App() {
   const [refreshFunc, {isLoading}] = userApi.useLazyRefreshQuery()
 
   const [mood, setMood] = useState(0)
+  const [enable, setEnable] = useState(false)
 
   useEffect(() => {
     if(localStorage.getItem('refresh') && localStorage.getItem('access')){
       refreshFunc()
     }
+    setEnable(true)
   }, [])
 
   if(isLoading){
@@ -29,7 +31,7 @@ function App() {
       <Logined/>
     </div>
   }
-  else if(!auth){
+  else if(!auth && enable){
     return <div className='mainCss'>
       <button onClick={() => setMood(12345)}>Regis</button>
       <button onClick={() => setMood(23456)}>Login</button>
